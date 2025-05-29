@@ -130,5 +130,3 @@ segmentations = {
         "zucchini_bottom": get_material_segments("fast", "zucchini_bottom"),
     }
 }
-
-print(segmentations)
