@@ -14,8 +14,8 @@ class FilterMode(Enum):
     DENOISE = 2
 
 # FILTER = FilterMode.NONE
-FILTER = FilterMode.BANDPASS
-# FILTER = FilterMode.DENOISE
+# FILTER = FilterMode.BANDPASS
+FILTER = FilterMode.DENOISE
 
 def filter_audio_bandpass(audio, sr, low=11000, high=15000):
     b, a = butter(7, [low, high], btype="bandpass", fs=sr)
