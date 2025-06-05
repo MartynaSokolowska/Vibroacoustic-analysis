@@ -14,8 +14,8 @@ class FilterMode(Enum):
     DENOISE = 2
 
 # FILTER = FilterMode.NONE
-# FILTER = FilterMode.BANDPASS
-FILTER = FilterMode.DENOISE
+FILTER = FilterMode.BANDPASS
+# FILTER = FilterMode.DENOISE
 
 def filter_audio_bandpass(audio, sr, low=11000, high=15000):
     b, a = butter(7, [low, high], btype="bandpass", fs=sr)
@@ -43,8 +43,8 @@ def split_wav_by_material(
 
     for material in segments:
         for i, (start, end) in enumerate(material.segments, start=1):
-            start_ms = int(start * 1000)
-            end_ms = int(end * 1000)
+            start_ms = int(start * sr)
+            end_ms = int(end * sr)
 
             folder_name = os.path.join(output_dir, material.material_name.replace('/', '_').replace(' ', '_'))
             os.makedirs(folder_name, exist_ok=True)
