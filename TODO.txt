@@ -1,0 +1,23 @@
+1. Odszumianie
+    a. raczej przed segmentacją
+    b. automatyczne tu nie będą działać. trzeba zwizualizować (lab1) i wyciągnąć wnioski
+    c. praca i wnioski
+    d. może być ostatecznie ten zakres częstotliwości co w lab1
+
+2. Na razie ona trenuje klasyfikator segmentów, ale chodzi o samą segmentację również - trzeba podejść do tego ood nowa z innej strony
+    a. sieć neuronowa audio -> czas przejścia (wspólny lub każdy typ osobno) lub przedziały czasowe (0/1)
+    b. może inna ekstrakcja cech
+    c. problem z tym że zawsze mamy te same momenty przejść zarówno w treningowym jak i testowym
+    d. Inna opcja - wykrywanie momentów przejścia na bazie tego co jest: fragment -> jaka to tkanka
+    e. jak nie zwykła sieć neuronowa z wynikiem fft, to może rekurencyjna ale trzeba poczytać
+
+3. Zapisywanie wyników i wykresów
+
+
+
+...
+
+
+1. Dodać możliwość filtrowania (na 2 sposoby)
+2. Poczytać o ewaluacji i zrobić ten siluete i db..
+3. Sprawdzić czy na pewno dzielimy na 2 wymiary
