@@ -3,8 +3,8 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import classification_report, silhouette_score, davies_bouldin_score
 
 
-def reduce_dimensionality(X):
-    reducer = umap.UMAP(n_neighbors=15, min_dist=0.1, n_components=2, random_state=42)
+def reduce_dimensionality_UMAP(X):
+    reducer = umap.UMAP(n_neighbors=6, min_dist=0.1, spread=0.6, n_components=10, random_state=42)
     return reducer.fit_transform(X)
 
 
