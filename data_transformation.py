@@ -32,7 +32,13 @@ def reduce_noise_in_audio(audio, sr):
 
 
 def split_wav_by_material(
-        movement_type: str, layout_type: str, input_file: str, output_dir: str, preprocess_func=lambda x, _: x):
+        movement_type: str, 
+        layout_type: str, 
+        input_file: str, 
+        output_dir: str, 
+        preprocess_func=lambda x, _: x, 
+        segment_duration_ms = 100
+        ):
     basename = Path(input_file).stem
     sr, audio = wavfile.read(input_file)
     audio = preprocess_func(audio, sr)
@@ -42,16 +48,42 @@ def split_wav_by_material(
         raise ValueError("Invalid movement_type or layout_type")
 
     for material in segments:
-        for i, (start, end) in enumerate(material.segments, start=1):
+        for start, end in (material.segments):
             start_ms = int(start * sr)
             end_ms = int(end * sr)
+            segment_audio = audio[start_ms:end_ms]
 
-            folder_name = os.path.join(output_dir, material.material_name.replace('/', '_').replace(' ', '_'))
+            chunk_size = int(sr * segment_duration_ms / 1000)
+            num_chunks = (len(segment_audio) // chunk_size)
+
+            chunks = np.array([
+                segment_audio[j * chunk_size:(j + 1) * chunk_size]
+                for j in range(num_chunks)
+            ])
+
+            rms_values = np.array([
+                np.sqrt(np.mean(chunk.astype(np.float64)**2)) for chunk in chunks
+            ])
+
+            mean_rms = np.mean(rms_values)
+            std_rms = np.std(rms_values)
+
+            valid_indices = np.where(
+                (rms_values >= mean_rms - 2 * std_rms) &
+                (rms_values <= mean_rms + 2 * std_rms)
+            )[0]
+
+            folder_name = os.path.join(
+                output_dir,
+                material.material_name.replace('/', '_').replace(' ', '_')
+            )
             os.makedirs(folder_name, exist_ok=True)
 
-            output_path = os.path.join(folder_name, f"{basename}_segment{i}.wav")
-            wavfile.write(output_path, sr, audio[start_ms:end_ms])
-            print(f"Saved: {output_path}")
+            for j, idx in enumerate(valid_indices, start=1):
+                chunk = chunks[idx]
+                output_path = os.path.join(folder_name, f"{basename}_chunk{j}.wav")
+                wavfile.write(output_path, sr, chunk.astype(np.int16))
+                print(f"Saved: {output_path}")
 
 
 def split_all():

@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 
 
 if __name__ == "__main__":
-    features, labels = get_all_features("results")
+    features, labels = get_all_features("results_denoised")
     X_2d = reduce_dimensionality(features)
     plot_umap(X_2d, labels)
     X_train, X_test, y_train, y_test = train_test_split(X_2d, labels, test_size=0.3, random_state=42)
