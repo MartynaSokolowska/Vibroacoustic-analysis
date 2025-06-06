@@ -65,7 +65,7 @@ def split_wav_by_material(
                 np.sqrt(np.mean(chunk.astype(np.float64)**2)) for chunk in chunks
             ])
 
-            mean_rms = np.mean(rms_values)
+            mean_rms = np.median(rms_values)
             std_rms = np.std(rms_values)
 
             valid_indices = np.where(
