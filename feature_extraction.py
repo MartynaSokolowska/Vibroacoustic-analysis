@@ -1,3 +1,4 @@
+import librosa
 from scipy.fftpack import fft, ifft
 from scipy.io import wavfile
 import numpy as np
@@ -30,6 +31,12 @@ def extract_log_fft_features(wav_path, fixed_length=50):
     return np.array(features)
 
 
+def extract_mfcc_features(wav_path, n_mfcc=20):
+    y, sr = librosa.load(wav_path, sr=None)
+    mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=n_mfcc)
+    return np.mean(mfcc, axis=1)
+
+
 def get_all_features(data_root):
     labels = []
     features = []
@@ -40,7 +47,7 @@ def get_all_features(data_root):
             continue
 
         for file in glob.glob(f"{folder}/*.wav"):
-            feat = extract_log_fft_features(file)
+            feat = extract_mfcc_features(file)
             features.append(feat)
             labels.append(material)
 
