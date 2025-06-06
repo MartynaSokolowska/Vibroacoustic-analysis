@@ -95,12 +95,10 @@ class MaterialSegments:
 def get_material_segments(movement_type: str, layout_type: str):
     chicken = MaterialSegments("chicken")
     gelatine = MaterialSegments("gelatine")
-    air = MaterialSegments("air")
     zucchini = MaterialSegments("zucchini")
 
     movement_segmentation = movement_segmentations_raw[movement_type][layout_type]
 
-    air.add_segment(movement_segmentation[0].going_down_time, movement_segmentation[1].going_down_time[0])
     gelatine.add_segment(movement_segmentation[1].going_down_time[1], movement_segmentation[2].going_down_time[0])
 
     if layout_type == "zucchini_top":
@@ -113,7 +111,7 @@ def get_material_segments(movement_type: str, layout_type: str):
 
     gelatine.add_segment(movement_segmentation[4].going_down_time[1], movement_segmentation[5].going_down_time[0])
 
-    return [chicken, gelatine, air, zucchini]
+    return [chicken, gelatine, zucchini]
 
 
 segmentations = {
