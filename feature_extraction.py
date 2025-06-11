@@ -37,7 +37,7 @@ def extract_mfcc_features(wav_path, n_mfcc=20):
     return np.mean(mfcc, axis=1)
 
 
-def get_all_features(data_root):
+def get_all_features(data_root, extractor=extract_mfcc_features):
     labels = []
     features = []
 
@@ -47,7 +47,7 @@ def get_all_features(data_root):
             continue
 
         for file in glob.glob(f"{folder}/*.wav"):
-            feat = extract_mfcc_features(file)
+            feat = extractor(file)
             features.append(feat)
             labels.append(material)
 

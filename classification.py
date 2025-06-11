@@ -8,8 +8,8 @@ def reduce_dimensionality_UMAP(X, components):
     return reducer.fit_transform(X)
 
 
-def fit_classifier(X, y):
-    clf = KNeighborsClassifier(n_neighbors=3)
+def fit_classifier(X, y, k=3):
+    clf = KNeighborsClassifier(n_neighbors=k)
     clf.fit(X, y)
     return clf
 

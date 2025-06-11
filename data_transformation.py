@@ -13,11 +13,11 @@ class FilterMode(Enum):
     BANDPASS = 1
     DENOISE = 2
 
-# FILTER = FilterMode.NONE
+FILTER = FilterMode.NONE
 # FILTER = FilterMode.BANDPASS
-FILTER = FilterMode.DENOISE
+# FILTER = FilterMode.DENOISE
 
-def filter_audio_bandpass(audio, sr, low=11000, high=15000):
+def filter_audio_bandpass(audio, sr, low=3000, high=6000):
     b, a = butter(7, [low, high], btype="bandpass", fs=sr)
     return lfilter(b, a, audio)
 

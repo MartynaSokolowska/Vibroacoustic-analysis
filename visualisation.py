@@ -17,13 +17,13 @@ def audio_plot(data, samplerate):
     plt.show()
 
 
-def plot_umap(X_2d, labels):
+def plot2D(X_2d, labels, title="2D Projection"):
     plt.figure(figsize=(8, 6))
     for label in np.unique(labels):
         idx = labels == label
         plt.scatter(X_2d[idx, 0], X_2d[idx, 1], label=label)
     plt.legend()
-    plt.title("UMAP Projection")
+    plt.title(title)
     plt.show()
 
 

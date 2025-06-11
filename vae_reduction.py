@@ -1,7 +1,5 @@
-import numpy as np
 import tensorflow as tf
 from tensorflow.keras import layers
-import matplotlib.pyplot as plt
 
 class Sampling(layers.Layer):
     def call(self, inputs):
@@ -46,12 +44,4 @@ def reduce_dimensionality_VAE(X, latent_dim=2, epochs=50, batch_size=32):
     x = vae.encoder_dense(encoder_input)
     z_mean = vae.z_mean_dense(x)
     encoder = tf.keras.Model(encoder_input, z_mean)
-
-    X_reduced = encoder.predict(X)
-
-    if latent_dim == 2:
-        plt.scatter(X_reduced[:, 0], X_reduced[:, 1])
-        plt.title("VAE latent space")
-        plt.show()
-
-    return X_reduced
+    return encoder.predict(X)
